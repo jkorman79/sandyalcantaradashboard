@@ -307,6 +307,10 @@ if page == "Overview":
     if selected_metric in whole_number_metrics:
         text_format = [f"{int(val)}" for val in metric_values]
         text_template = '%{text}'
+    elif selected_metric == 'BAbip':
+        # BAbip should have 3 decimal places
+        text_format = [f"{val:.3f}" for val in metric_values]
+        text_template = '%{text:.3f}'
     else:
         text_format = [f"{val:.2f}" for val in metric_values]
         text_template = '%{text:.2f}'
