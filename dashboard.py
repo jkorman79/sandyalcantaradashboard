@@ -155,6 +155,10 @@ df_data, df_season, df_vars = load_data()
 
 # Title and Introduction
 st.title("⚾ Sandy Alcantara: Performance Analysis Dashboard")
+
+# Add Sandy Alcantara image at the top
+st.image("Sandy Picture.jpeg", use_container_width=True)
+
 st.markdown("""
 <div class="baseball-header">
     🏟️ ⚾ 🎯 ⚾ 📊 ⚾ 🎯 ⚾ 🏟️
@@ -588,7 +592,8 @@ elif page == "Pitch Usage Analysis":
                 y=df_season[pitch] * 100,
                 hovertemplate=f'{pitch_names[pitch]}: %{{y:.1f}}%<extra></extra>',
                 text=[f"{val:.1f}%" for val in df_season[pitch] * 100],
-                textposition='inside'
+                textposition='outside',
+                textangle=0
             )
         )
     
@@ -786,6 +791,14 @@ elif page == "Detailed Statistics":
             metric_vals = df_season[metric].tolist()
             max_metric_val = max(metric_vals)
             
+            # Format text based on metric type
+            if metric in ['ERA', 'FIP', 'BAbip']:
+                text_format = [f"{val:.2f}" for val in metric_vals]
+            elif metric in ['Pit', 'Str', 'GmSc', 'GB', 'LD', 'FB', 'PU', 'StL', 'HR', 'SO', 'BB', 'H']:
+                text_format = [f"{int(val)}" for val in metric_vals]
+            else:
+                text_format = [f"{val:.1f}" for val in metric_vals]
+            
             fig.add_trace(
                 go.Bar(
                     x=years_int,
@@ -793,7 +806,7 @@ elif page == "Detailed Statistics":
                     name=metric,
                     marker_color=[colors[str(y)] for y in years_int],
                     showlegend=False,
-                    text=[f"{int(val)}" if metric in ['HR', 'SO', 'BB', 'H'] else f"{val:.1f}" for val in metric_vals],
+                    text=text_format,
                     textposition='outside'
                 ),
                 row=i, col=1
