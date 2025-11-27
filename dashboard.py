@@ -157,7 +157,7 @@ df_data, df_season, df_vars = load_data()
 st.title("⚾ Sandy Alcantara: Performance Analysis Dashboard")
 
 # Add Sandy Alcantara image at the top (centered and smaller)
-col1, col2, col3 = st.columns([1, 2, 1])
+col1, col2, col3 = st.columns([1, 1, 1])
 with col2:
     st.image("Sandy Picture.jpeg", width=400)
 
