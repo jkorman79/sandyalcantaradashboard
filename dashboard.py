@@ -141,6 +141,9 @@ st.markdown("""
         font-weight: 600;
         cursor: pointer;
         text-decoration: none;
+        display: inline-block;
+        width: auto !important;
+        margin: 0 auto;
     }
     #tour-button button:hover {
         text-decoration: underline;
