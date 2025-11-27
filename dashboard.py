@@ -131,7 +131,11 @@ st.markdown("""
     }
     
     /* CTA link styled button */
-    #tour-button button {
+    div[data-testid="stButton"] {
+        display: flex;
+        justify-content: center;
+    }
+    div[data-testid="stButton"] > button {
         background: none;
         border: none;
         padding: 0;
@@ -141,11 +145,10 @@ st.markdown("""
         font-weight: 600;
         cursor: pointer;
         text-decoration: none;
-        display: inline-block;
         width: auto !important;
-        margin: 0 auto;
+        margin: 0.5rem auto 0.25rem auto;
     }
-    #tour-button button:hover {
+    div[data-testid="stButton"] > button:hover {
         text-decoration: underline;
     }
 </style>
@@ -187,9 +190,7 @@ with col2:
 
 cta_col1, cta_col2, cta_col3 = st.columns([1, 1, 1])
 with cta_col2:
-    st.markdown("<div id='tour-button' style='text-align: center;'>", unsafe_allow_html=True)
     tour_clicked = st.button("Click here for a tour of the dashboard!", key="tour_cta")
-    st.markdown("</div>", unsafe_allow_html=True)
     if tour_clicked:
         st.session_state['show_video'] = True
 
