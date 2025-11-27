@@ -129,8 +129,28 @@ st.markdown("""
         color: #424242;
         margin-bottom: 1rem;
     }
+    
+    /* CTA link styled button */
+    #tour-button button {
+        background: none;
+        border: none;
+        padding: 0;
+        color: #1565c0 !important;
+        font-family: 'Oswald', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    #tour-button button:hover {
+        text-decoration: underline;
+    }
 </style>
 """, unsafe_allow_html=True)
+
+# Session state for Loom video visibility
+if 'show_video' not in st.session_state:
+    st.session_state['show_video'] = False
 
 # Load data
 @st.cache_data
@@ -162,53 +182,31 @@ col1, col2, col3 = st.columns([1, 1, 1])
 with col2:
     st.image("Sandy Picture.jpeg", width=400)
 
-components.html(
-    """
-    <div id="loom-wrapper" style="max-width: 400px; margin: 0 auto;">
-        <div style='text-align: center; margin-top: 0.5rem;'>
-            <a id="loom-tour-link"
-               href="#"
-               style='font-family: "Oswald", sans-serif; font-size: 1.2rem; color: #1565c0; text-decoration: none; font-weight: 600;'>
-                Click here for a tour of the dashboard!
-            </a>
-        </div>
-        <div id="loom-player"
-             style="display: none; margin-top: 1rem; position: relative; padding-bottom: 64.92335437330928%; height: 0; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden;">
-            <iframe id="loom-iframe"
-                    src=""
-                    frameborder="0"
-                    webkitallowfullscreen
-                    mozallowfullscreen
-                    allowfullscreen
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-            </iframe>
-        </div>
-    </div>
-    <script>
-        const tourLink = document.getElementById("loom-tour-link");
-        const player = document.getElementById("loom-player");
-        const iframe = document.getElementById("loom-iframe");
-        const autoplaySrc = "https://www.loom.com/embed/9cb8d7f5591649fe98f7b6169f7eebfa?autoplay=1";
-        const setHeight = (height) => {
-            window.parent.postMessage({type: "streamlit:setFrameHeight", height: height}, "*");
-        };
+cta_col1, cta_col2, cta_col3 = st.columns([1, 1, 1])
+with cta_col2:
+    st.markdown("<div id='tour-button' style='text-align: center;'>", unsafe_allow_html=True)
+    tour_clicked = st.button("Click here for a tour of the dashboard!", key="tour_cta")
+    st.markdown("</div>", unsafe_allow_html=True)
+    if tour_clicked:
+        st.session_state['show_video'] = True
 
-        setHeight(150);
-
-        if (tourLink && player && iframe) {
-            tourLink.addEventListener("click", function (event) {
-                event.preventDefault();
-                if (player.style.display === "none") {
-                    player.style.display = "block";
-                    iframe.src = autoplaySrc;
-                    setTimeout(() => setHeight(520), 10);
-                }
-            });
-        }
-    </script>
-    """,
-    height=150,
-)
+if st.session_state['show_video']:
+    video_col1, video_col2, video_col3 = st.columns([1, 1, 1])
+    with video_col2:
+        components.html(
+            """
+            <div style="max-width: 400px; margin: 0 auto; position: relative; padding-bottom: 64.92335437330928%; height: 0; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden;">
+                <iframe src="https://www.loom.com/embed/9cb8d7f5591649fe98f7b6169f7eebfa?autoplay=1"
+                        frameborder="0"
+                        webkitallowfullscreen
+                        mozallowfullscreen
+                        allowfullscreen
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                </iframe>
+            </div>
+            """,
+            height=450,
+        )
 
 st.markdown("""
 <div class="baseball-header">
