@@ -214,6 +214,9 @@ components.html(
         const iframe = document.getElementById("loom-iframe");
         const autoplaySrc = "https://www.loom.com/embed/9cb8d7f5591649fe98f7b6169f7eebfa?autoplay=1";
         const setHeight = (height) => {
+            if (window.frameElement) {
+                window.frameElement.style.height = height + "px";
+            }
             window.parent.postMessage({type: "streamlit:setFrameHeight", height: height}, "*");
         };
 
@@ -225,7 +228,7 @@ components.html(
                 if (player.style.display === "none") {
                     player.style.display = "block";
                     iframe.src = autoplaySrc;
-                    setTimeout(() => setHeight(640), 50);
+                    setTimeout(() => setHeight(700), 50);
                 }
             });
         }
