@@ -4,6 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np
+import streamlit.components.v1 as components
 
 # Page configuration
 st.set_page_config(
@@ -160,6 +161,31 @@ st.title("⚾ Sandy Alcantara: Performance Analysis Dashboard")
 col1, col2, col3 = st.columns([1, 1, 1])
 with col2:
     st.image("Sandy Picture.jpeg", width=400)
+
+st.markdown("""
+<div style='text-align: center; margin-top: 0.5rem;'>
+    <a href="#dashboard-tour" style='font-family: "Oswald", sans-serif; font-size: 1.2rem; color: #1565c0; text-decoration: none; font-weight: 600;'>
+        Click here for a tour of the dashboard!
+    </a>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("<div id='dashboard-tour'></div>", unsafe_allow_html=True)
+
+components.html(
+    """
+    <div style="position: relative; padding-bottom: 64.92335437330928%; height: 0;">
+        <iframe src="https://www.loom.com/embed/9cb8d7f5591649fe98f7b6169f7eebfa"
+                frameborder="0"
+                webkitallowfullscreen
+                mozallowfullscreen
+                allowfullscreen
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+        </iframe>
+    </div>
+    """,
+    height=450,
+)
 
 st.markdown("""
 <div class="baseball-header">
