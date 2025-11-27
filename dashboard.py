@@ -4,7 +4,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np
-import streamlit.components.v1 as components
 
 # Page configuration
 st.set_page_config(
@@ -174,67 +173,18 @@ col1, col2, col3 = st.columns([1, 1, 1])
 with col2:
     st.image("Sandy Picture.jpeg", width=400)
 
-components.html(
+st.markdown(
     """
-    <style>
-        .tour-link {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.2rem;
-            color: #1565c0;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .tour-link:hover {
-            text-decoration: underline;
-        }
-    </style>
-    <div id="loom-wrapper" style="max-width: 400px; margin: 0 auto;">
-        <div style='text-align: center; margin-top: 0.5rem;'>
-            <a id="loom-tour-link"
-               href="#"
-               class="tour-link">
-                Click here for a tour of the dashboard!
-            </a>
-        </div>
-        <div id="loom-player"
-             style="display: none; margin-top: 1rem; position: relative; padding-bottom: 64.92335437330928%; height: 0; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden;">
-            <iframe id="loom-iframe"
-                    src=""
-                    frameborder="0"
-                    webkitallowfullscreen
-                    mozallowfullscreen
-                    allowfullscreen
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-            </iframe>
-        </div>
+    <div style='text-align: center; margin-top: 0.5rem;'>
+        <a class="tour-link"
+           href="https://www.loom.com/share/9cb8d7f5591649fe98f7b6169f7eebfa?t=25"
+           target="_blank"
+           rel="noopener noreferrer">
+            Click here for a tour of the dashboard!
+        </a>
     </div>
-    <script>
-        const tourLink = document.getElementById("loom-tour-link");
-        const player = document.getElementById("loom-player");
-        const iframe = document.getElementById("loom-iframe");
-        const autoplaySrc = "https://www.loom.com/embed/9cb8d7f5591649fe98f7b6169f7eebfa?autoplay=1";
-        const setHeight = (height) => {
-            if (window.frameElement) {
-                window.frameElement.style.height = height + "px";
-            }
-            window.parent.postMessage({type: "streamlit:setFrameHeight", height: height}, "*");
-        };
-
-        setHeight(120);
-
-        if (tourLink && player && iframe) {
-            tourLink.addEventListener("click", function (event) {
-                event.preventDefault();
-                if (player.style.display === "none") {
-                    player.style.display = "block";
-                    iframe.src = autoplaySrc;
-                    setTimeout(() => setHeight(700), 50);
-                }
-            });
-        }
-    </script>
     """,
-    height=150,
+    unsafe_allow_html=True
 )
 
 st.markdown("""
