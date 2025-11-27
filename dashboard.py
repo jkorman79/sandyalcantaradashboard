@@ -164,7 +164,7 @@ with col2:
 
 components.html(
     """
-    <div style="max-width: 400px; margin: 0 auto;">
+    <div id="loom-wrapper" style="max-width: 400px; margin: 0 auto;">
         <div style='text-align: center; margin-top: 0.5rem;'>
             <a id="loom-tour-link"
                href="#"
@@ -189,6 +189,11 @@ components.html(
         const player = document.getElementById("loom-player");
         const iframe = document.getElementById("loom-iframe");
         const autoplaySrc = "https://www.loom.com/embed/9cb8d7f5591649fe98f7b6169f7eebfa?autoplay=1";
+        const setHeight = (height) => {
+            window.parent.postMessage({type: "streamlit:setFrameHeight", height: height}, "*");
+        };
+
+        setHeight(150);
 
         if (tourLink && player && iframe) {
             tourLink.addEventListener("click", function (event) {
@@ -196,12 +201,13 @@ components.html(
                 if (player.style.display === "none") {
                     player.style.display = "block";
                     iframe.src = autoplaySrc;
+                    setTimeout(() => setHeight(520), 10);
                 }
             });
         }
     </script>
     """,
-    height=520,
+    height=150,
 )
 
 st.markdown("""
